@@ -52,6 +52,9 @@ def encrypt(text, rotation):
         answer += rotate_char(char, rotation)
     return answer
 
+#def escape_html(e):
+#    return cgi.escape(e, quote = True)
+
 class Caesar(webapp2.RequestHandler):
     def write_form(self, answer=""):
         self.response.out.write(caesar_form % {"answer": answer})
@@ -63,7 +66,7 @@ class Caesar(webapp2.RequestHandler):
         rotation = self.request.get("caesar-rot")
         rotation = int(rotation)
         text = self.request.get("text")
-        answer = encrypt(text, rotation)
+        answer = encrypt(cgi.escape(text, quote = True), rotation)
         self.write_form(answer)
 
 app = webapp2.WSGIApplication([
